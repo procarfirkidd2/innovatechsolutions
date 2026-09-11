@@ -60,6 +60,22 @@ const navItems = [
   ["Productos", "#productos"], ["¿Por qué INNOVATECH?", "#diferenciadores"], ["Contacto", "#contacto"],
 ] as const;
 
+const trustPoints = [
+  { icon: ShieldCheck, title: "Servicio profesional", copy: "Soluciones adaptadas" },
+  { icon: Users, title: "Atención personalizada", copy: "Conocemos su necesidad" },
+  { icon: Factory, title: "Enfoque industrial", copy: "Comprendemos su entorno" },
+  { icon: Target, title: "Soluciones a medida", copy: "Según cada trabajo" },
+];
+
+const productCategories = [
+  { icon: Box, title: "Equipos industriales" },
+  { icon: Wrench, title: "Herramientas" },
+  { icon: PackageSearch, title: "Insumos" },
+  { icon: Sparkles, title: "Productos para limpieza" },
+  { icon: Zap, title: "Soluciones técnicas" },
+  { icon: BriefcaseBusiness, title: "Productos bajo requerimiento" },
+];
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -153,8 +169,8 @@ function Index() {
 
       <section className="trust-strip" aria-label="Compromisos de servicio">
         <div className="container trust-grid">
-          {[[ShieldCheck,"Servicio profesional","Soluciones adaptadas"],[Users,"Atención personalizada","Conocemos su necesidad"],[Factory,"Enfoque industrial","Comprendemos su entorno"],[Target,"Soluciones a medida","Según cada trabajo"]].map(([Icon,title,copy]) =>
-            <div className="trust-item" key={title as string}><Icon aria-hidden="true" /><div><strong>{title as string}</strong><span>{copy as string}</span></div></div>
+          {trustPoints.map(({ icon: Icon, title, copy }) =>
+            <div className="trust-item" key={title}><Icon aria-hidden="true" /><div><strong>{title}</strong><span>{copy}</span></div></div>
           )}
         </div>
       </section>
@@ -209,7 +225,7 @@ function Index() {
             <ActionLink href="#contacto">Consultar productos</ActionLink>
           </div>
           <div className="product-list">
-            {[[Box,"Equipos industriales"],[Wrench,"Herramientas"],[PackageSearch,"Insumos"],[Sparkles,"Productos para limpieza"],[Zap,"Soluciones técnicas"],[BriefcaseBusiness,"Productos bajo requerimiento"]].map(([Icon,title]) => <div key={title as string}><Icon /><span>{title as string}</span></div>)}
+            {productCategories.map(({ icon: Icon, title }) => <div key={title}><Icon /><span>{title}</span></div>)}
           </div>
         </div>
       </section>
