@@ -183,6 +183,18 @@ a { color: inherit; text-decoration: none; }
 .whatsapp-float span { align-self: end; font-size: .75rem; font-weight: 850; }
 .whatsapp-float small { align-self: start; color: color-mix(in oklab, var(--color-primary-foreground) 62%, transparent); font-size: .6rem; }
 
+/* Keep the Botpress launcher clear of the WhatsApp contact control. Botpress
+   injects its widget after page load, so cover its launcher/container variants. */
+#bp-web-widget,
+#bp-web-widget-container,
+.bp-widget-web,
+.bp-widget-button,
+iframe[src*="botpress"] {
+  right: 22px !important;
+  bottom: 96px !important;
+  z-index: 44 !important;
+}
+
 @media (max-width: 1080px) {
   .desktop-nav { display: none; } .header-cta { margin-left: auto; } .menu-button { display: flex; }
   .mobile-nav { display: grid; padding: 12px 20px 20px; background: var(--color-background); border-top: 1px solid var(--color-border); }
@@ -213,5 +225,6 @@ a { color: inherit; text-decoration: none; }
   .whatsapp-cta { min-height: 0; padding: 34px 24px; }
   .footer-grid { gap: 34px; } .footer-bottom { display: grid; gap: 8px; }
   .whatsapp-float { right: 14px; bottom: 14px; } .whatsapp-float span, .whatsapp-float small { display: none; } .whatsapp-float { width: 54px; padding: 0; display: grid; place-items: center; } .whatsapp-float svg { grid-row: auto; }
+  #bp-web-widget, #bp-web-widget-container, .bp-widget-web, .bp-widget-button, iframe[src*="botpress"] { right: 14px !important; bottom: 84px !important; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
