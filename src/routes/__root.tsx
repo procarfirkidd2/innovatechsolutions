@@ -139,9 +139,24 @@ function RootComponent() {
       ];
 
       const visit = (root: Document | ShadowRoot | Element) => {
-        root.querySelectorAll(selectors.join(",")).forEach((element) => {
+        const candidates = new Set<Element>(root.querySelectorAll(selectors.join(",")));
+        root.querySelectorAll("*").forEach((element) => {
+          const style = getComputedStyle(element);
+          const rect = element.getBoundingClientRect();
+          const isBottomRightFixed = style.position === "fixed"
+            && rect.width >= 40
+            && rect.width <= 420
+            && rect.height >= 40
+            && rect.height <= 420
+            && rect.right >= window.innerWidth - 280
+            && rect.bottom >= window.innerHeight - 280;
+          if (isBottomRightFixed) candidates.add(element);
+        });
+
+        candidates.forEach((element) => {
           if (!(element instanceof HTMLElement || element instanceof HTMLIFrameElement)) return;
           if (element.classList.contains("whatsapp-float")) return;
+          if (element.closest(".whatsapp-float")) return;
           element.style.setProperty("bottom", bottom, "important");
           element.style.setProperty("z-index", "44", "important");
         });
