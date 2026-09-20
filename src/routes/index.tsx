@@ -18,7 +18,6 @@ import {
   MessageCircle,
   PackageSearch,
   Phone,
-  Send,
   ShieldCheck,
   SlidersHorizontal,
   Sparkles,
