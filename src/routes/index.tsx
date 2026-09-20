@@ -4,6 +4,8 @@ import {
   Box,
   BriefcaseBusiness,
   Building2,
+  BadgeCheck,
+  CalendarCheck,
   Check,
   ChevronDown,
   ClipboardCheck,
@@ -16,40 +18,51 @@ import {
   MessageCircle,
   PackageSearch,
   Phone,
-  Send,
   ShieldCheck,
+  SlidersHorizontal,
   Sparkles,
   Target,
   Users,
+  UserCheck,
   Wrench,
   X,
   Zap,
 } from "lucide-react";
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import heroImage from "@/assets/innovatech-industrial-cleaning.jpg";
+import industrialFacilitiesImage from "@/assets/service-industrial-facilities.jpg";
+import operationalAreasImage from "@/assets/service-operational-areas.jpg";
+import deepCleaningImage from "@/assets/service-deep-cleaning.jpg";
+import workSurfacesImage from "@/assets/service-work-surfaces.jpg";
+import businessSpacesImage from "@/assets/service-business-spaces.jpg";
+import customRequirementsImage from "@/assets/service-custom-requirements.jpg";
+
+const WHATSAPP_NUMBER = "59170342757";
+const GENERAL_WHATSAPP_MESSAGE = "Hola, estoy interesado en conocer más sobre los servicios de INNOVATECH SOLUTIONS S.R.L.";
+const whatsappUrl = (message = GENERAL_WHATSAPP_MESSAGE) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
 const services = [
-  [Factory, "Limpieza de instalaciones industriales", "Atención para plantas, almacenes y espacios con exigencias operativas particulares."],
-  [Zap, "Limpieza de áreas operativas", "Intervenciones organizadas según las condiciones y dinámica de cada área."],
-  [Sparkles, "Limpieza profunda", "Tratamiento detallado para acumulaciones de polvo, grasa, residuos y suciedad."],
-  [Wrench, "Superficies y áreas de trabajo", "Limpieza profesional de superficies, zonas técnicas y espacios de producción."],
-  [Building2, "Espacios empresariales", "Soluciones para oficinas, áreas comunes y grandes instalaciones corporativas."],
-  [ClipboardCheck, "Servicios según requerimiento", "Un alcance diseñado a partir del tipo de instalación, necesidad y frecuencia."],
+  [Factory, "Limpieza de instalaciones industriales", "Atención para plantas, almacenes y espacios con exigencias operativas particulares.", industrialFacilitiesImage],
+  [Zap, "Limpieza de áreas operativas", "Intervenciones organizadas según las condiciones y dinámica de cada área.", operationalAreasImage],
+  [Sparkles, "Limpieza profunda", "Tratamiento detallado para acumulaciones de polvo, grasa, residuos y suciedad.", deepCleaningImage],
+  [Wrench, "Superficies y áreas de trabajo", "Limpieza profesional de superficies, zonas técnicas y espacios de producción.", workSurfacesImage],
+  [Building2, "Espacios empresariales", "Soluciones para oficinas, áreas comunes y grandes instalaciones corporativas.", businessSpacesImage],
+  [ClipboardCheck, "Servicios según requerimiento", "Un alcance diseñado a partir del tipo de instalación, necesidad y frecuencia.", customRequirementsImage],
 ] as const;
 
 const benefits = [
-  ["01", "Atención personalizada", "Analizamos el requerimiento antes de plantear una solución."],
-  ["02", "Enfoque profesional", "Trabajamos según las necesidades y exigencias del entorno industrial."],
-  ["03", "Personal capacitado", "Personal preparado para realizar las tareas con responsabilidad y cuidado."],
-  ["04", "Equipos adecuados", "Seleccionamos herramientas y productos de acuerdo con cada trabajo."],
-  ["05", "Organización y cumplimiento", "Priorizamos una ejecución ordenada y responsable del servicio."],
-  ["06", "Orientación a soluciones", "Entendemos el problema para plantear una respuesta práctica."],
+  ["01", Users, "Atención personalizada", "Analizamos el requerimiento antes de plantear una solución."],
+  ["02", BadgeCheck, "Enfoque profesional", "Trabajamos según las necesidades y exigencias del entorno industrial."],
+  ["03", UserCheck, "Personal capacitado", "Personal preparado para realizar las tareas con responsabilidad y cuidado."],
+  ["04", Wrench, "Equipos adecuados", "Seleccionamos herramientas y productos de acuerdo con cada trabajo."],
+  ["05", CalendarCheck, "Organización y cumplimiento", "Priorizamos una ejecución ordenada y responsable del servicio."],
+  ["06", SlidersHorizontal, "Orientación a soluciones", "Entendemos el problema para plantear una respuesta práctica."],
 ] as const;
 
 const faqs = [
   ["¿Trabajan con empresas e industrias?", "Sí. Nuestra propuesta está orientada principalmente a empresas que requieren servicios de limpieza y soluciones adaptadas a sus instalaciones."],
   ["¿Pueden adaptar el servicio a las necesidades de mi empresa?", "Sí. Evaluamos el requerimiento para plantear una solución acorde a las características del trabajo."],
-  ["¿Cómo puedo solicitar una cotización?", "Puede comunicarse con nosotros mediante WhatsApp, el formulario de contacto o nuestros canales de atención."],
+  ["¿Cómo puedo solicitar una cotización?", "Puede comunicarse directamente con nosotros mediante WhatsApp o correo electrónico."],
   ["¿Trabajan con servicios programados?", "Los servicios y su frecuencia pueden definirse de acuerdo con las necesidades del cliente y las características del requerimiento."],
   ["¿También comercializan productos industriales?", "Sí. Contamos con una línea complementaria de importación y comercialización de productos, equipos, herramientas e insumos para la industria."],
   ["¿Atienden requerimientos especiales?", "Puede enviarnos los detalles de su requerimiento para evaluar la solución más adecuada."],
@@ -111,8 +124,8 @@ function SectionHeading({ eyebrow, title, copy, light = false }: { eyebrow: stri
   </div>;
 }
 
-function ActionLink({ href, children, secondary = false, icon = true }: { href: string; children: ReactNode; secondary?: boolean; icon?: boolean }) {
-  return <a href={href} className={secondary ? "action action-secondary" : "action action-primary"}>
+function ActionLink({ href, children, secondary = false, icon = true, external = false }: { href: string; children: ReactNode; secondary?: boolean; icon?: boolean; external?: boolean }) {
+  return <a href={href} className={secondary ? "action action-secondary" : "action action-primary"} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>
     {children}{icon && <ArrowRight size={17} aria-hidden="true" />}
   </a>;
 }
@@ -128,27 +141,19 @@ function Header() {
       <nav className="desktop-nav" aria-label="Navegación principal">
         {navItems.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
       </nav>
-      <a href="#cotizacion" className="header-cta">Solicitar cotización</a>
+       <a href={whatsappUrl()} className="header-cta" target="_blank" rel="noreferrer">Solicitar cotización</a>
       <button className="menu-button" aria-label={open ? "Cerrar menú" : "Abrir menú"} aria-expanded={open} onClick={() => setOpen(!open)}>
         {open ? <X /> : <Menu />}
       </button>
     </div>
     {open && <nav className="mobile-nav" aria-label="Navegación móvil">
       {navItems.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>)}
-      <a href="#cotizacion" className="mobile-quote" onClick={() => setOpen(false)}>Solicitar cotización</a>
+       <a href={whatsappUrl()} className="mobile-quote" target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>Solicitar cotización</a>
     </nav>}
   </header>;
 }
 
 function Index() {
-  const [sent, setSent] = useState(false);
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!event.currentTarget.checkValidity()) return;
-    setSent(true);
-    event.currentTarget.reset();
-  };
-
   return <div className="site-shell">
     <Header />
     <main>
@@ -160,7 +165,7 @@ function Index() {
           <h1>Soluciones profesionales de <em>limpieza industrial</em></h1>
           <p className="hero-copy">Servicios adaptados a las necesidades de su empresa para mantener sus instalaciones limpias, ordenadas y listas para operar.</p>
           <div className="hero-actions">
-            <ActionLink href="#cotizacion">Solicitar cotización</ActionLink>
+             <ActionLink href={whatsappUrl()} external>Solicitar cotización</ActionLink>
             <ActionLink href="#servicios" secondary>Conocer servicios</ActionLink>
           </div>
           <p className="hero-location"><MapPin size={16} /> Santa Cruz de la Sierra, Bolivia</p>
@@ -182,14 +187,15 @@ function Index() {
             <div className="section-note"><span>01</span><p>Nuestro objetivo es contribuir a instalaciones limpias, ordenadas y adecuadas para sus actividades.</p></div>
           </div>
           <div className="service-grid">
-            {services.map(([Icon, title, copy]) => <article className="service-card" key={title}>
-              <div className="service-icon"><Icon size={24} /></div><h3>{title}</h3><p>{copy}</p>
-              <a href="#cotizacion">Solicitar cotización <ArrowRight size={15} /></a>
+             {services.map(([Icon, title, copy, image]) => <article className="service-card" key={title}>
+               <div className="service-image"><img src={image} loading="lazy" width={1200} height={768} alt={`Imagen referencial de ${title.toLowerCase()}`} /></div>
+               <div className="service-card-body"><div className="service-icon"><Icon size={24} /></div><h3>{title}</h3><p>{copy}</p>
+               <a href={whatsappUrl(`Hola, estoy interesado en el servicio de ${title}. Me gustaría recibir información y una cotización.`)} target="_blank" rel="noreferrer">Solicitar cotización <ArrowRight size={15} /></a></div>
             </article>)}
           </div>
           <div className="custom-solution">
             <div><p className="eyebrow">Un requerimiento diferente</p><h3>¿Necesita una solución específica?</h3><p>Cuéntenos qué necesita limpiar, las características de su instalación y la frecuencia requerida. Evaluaremos su requerimiento.</p></div>
-            <ActionLink href="#cotizacion">Solicitar cotización</ActionLink>
+             <ActionLink href={whatsappUrl("Hola, tengo un requerimiento específico de limpieza industrial. Me gustaría recibir información y una cotización.")} external>Solicitar cotización</ActionLink>
           </div>
         </div>
       </section>
@@ -197,7 +203,7 @@ function Index() {
       <section id="diferenciadores" className="section benefits-section">
         <div className="container">
           <SectionHeading eyebrow="Nuestra forma de trabajar" title="¿Por qué elegir INNOVATECH?" copy="Una respuesta profesional empieza por comprender el entorno, organizar el trabajo y atender lo que cada instalación realmente necesita." light />
-          <div className="benefit-grid">{benefits.map(([number,title,copy]) => <article key={number} className="benefit-item"><span>{number}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
+           <div className="benefit-grid">{benefits.map(([number, Icon, title, copy]) => <article key={number} className="benefit-item"><div className="benefit-icon"><Icon aria-hidden="true" /></div><span>{number}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
         </div>
       </section>
 
@@ -234,7 +240,7 @@ function Index() {
         <div className="container">
           <SectionHeading eyebrow="Proceso claro" title="¿Cómo trabajamos?" copy="Una coordinación simple y directa desde el primer contacto hasta la ejecución." />
           <div className="process-grid">{[["01","Cuéntenos su necesidad","Explique qué servicio necesita."],["02","Evaluamos el requerimiento","Analizamos el trabajo y la instalación."],["03","Proponemos una solución","Planteamos una alternativa adecuada."],["04","Coordinamos el servicio","Definimos los detalles para ejecutar."]].map(([n,t,c]) => <article key={n}><span>{n}</span><h3>{t}</h3><p>{c}</p></article>)}</div>
-          <div className="center-action"><ActionLink href="#cotizacion">Cuéntenos qué necesita</ActionLink></div>
+           <div className="center-action"><ActionLink href={whatsappUrl("Hola, quiero contarles una necesidad de mi empresa para conocer la solución más adecuada.")} external>Cuéntenos qué necesita</ActionLink></div>
         </div>
       </section>
 
@@ -270,29 +276,19 @@ function Index() {
             <p>Estamos listos para conocer su requerimiento de limpieza industrial o solución para su empresa.</p>
             <div className="contact-items">
               <div><MapPin /><span><small>Ubicación</small>Santa Cruz de la Sierra, Bolivia</span></div>
-              <div><Phone /><span><small>Teléfono / WhatsApp</small>Por confirmar</span></div>
-              <div><Mail /><span><small>Correo electrónico</small>Por confirmar</span></div>
+               <a href="https://wa.me/59170342757" target="_blank" rel="noreferrer"><Phone /><span><small>Teléfono / WhatsApp</small>+591 70342757</span></a>
+               <a href="mailto:innovatechsolutions.bo@gmail.com"><Mail /><span><small>Correo electrónico</small>innovatechsolutions.bo@gmail.com</span></a>
               <div><Clock3 /><span><small>Horario</small>Por confirmar</span></div>
             </div>
-            <div className="pending-note">Facilítenos sus datos reales para activar WhatsApp, llamadas y correo.</div>
           </div>
-          <form id="cotizacion" className="quote-form" onSubmit={handleSubmit}>
-            <div className="form-heading"><p className="eyebrow">Contacto comercial</p><h2>Solicita una cotización</h2><p>Complete sus datos y describa brevemente su necesidad.</p></div>
-            <div className="form-grid">
-              <label>Nombre *<input name="nombre" required maxLength={100} autoComplete="name" /></label>
-              <label>Empresa *<input name="empresa" required maxLength={120} autoComplete="organization" /></label>
-              <label>Cargo<input name="cargo" maxLength={100} autoComplete="organization-title" /></label>
-              <label>Teléfono / WhatsApp *<input name="telefono" required maxLength={30} inputMode="tel" autoComplete="tel" /></label>
-              <label>Correo electrónico *<input name="correo" type="email" required maxLength={180} autoComplete="email" /></label>
-              <label>Servicio de interés *<select name="servicio" required defaultValue=""><option value="" disabled>Seleccione una opción</option><option>Limpieza industrial</option><option>Limpieza profunda</option><option>Servicio según requerimiento</option><option>Productos industriales</option><option>Otro</option></select></label>
-              <label>Tipo de instalación<input name="instalacion" maxLength={120} placeholder="Ej. planta, almacén, oficinas" /></label>
-              <label>Frecuencia requerida<select name="frecuencia" defaultValue=""><option value="">Por definir</option><option>Servicio único</option><option>Semanal</option><option>Mensual</option><option>Programada</option></select></label>
-              <label className="full-field">Descripción del requerimiento *<textarea name="descripcion" required maxLength={1200} rows={4} /></label>
-              <label className="full-field">Mensaje adicional<textarea name="mensaje" maxLength={800} rows={3} /></label>
-            </div>
-            <button type="submit" className="submit-button">Solicitar cotización <Send size={17} /></button>
-            {sent ? <p className="form-success" role="status"><Check /> Solicitud preparada. El envío se activará al configurar el correo de destino.</p> : <p className="form-footnote">El envío quedará activo cuando se configure el correo corporativo.</p>}
-          </form>
+           <div className="whatsapp-cta">
+             <div className="whatsapp-cta-icon"><MessageCircle aria-hidden="true" /></div>
+             <p className="eyebrow">Contacto directo</p>
+             <h2>¿Necesita una solución para su empresa?</h2>
+             <p>Contáctenos directamente por WhatsApp y conversemos sobre su necesidad.</p>
+             <ActionLink href={whatsappUrl()} external icon={false}><MessageCircle size={19} /> Escribir por WhatsApp</ActionLink>
+             <small>Atención directa al +591 70342757</small>
+           </div>
         </div>
       </section>
     </main>
@@ -301,14 +297,14 @@ function Index() {
       <div className="container footer-grid">
         <div><a href="#inicio" className="brand footer-brand"><span className="brand-mark">IS</span><span><strong>INNOVATECH</strong><small>SOLUTIONS S.R.L.</small></span></a><p>Servicios industriales de limpieza y soluciones para la industria.</p></div>
         <div><h3>Enlaces</h3>{navItems.slice(0,5).map(([l,h]) => <a key={h} href={h}>{l}</a>)}</div>
-        <div><h3>Contacto</h3><p>Santa Cruz de la Sierra, Bolivia</p><p>Teléfono: Por confirmar</p><p>Correo: Por confirmar</p></div>
+         <div><h3>Contacto</h3><p>Santa Cruz de la Sierra, Bolivia</p><a href="https://wa.me/59170342757" target="_blank" rel="noreferrer">WhatsApp: +591 70342757</a><a href="mailto:innovatechsolutions.bo@gmail.com">innovatechsolutions.bo@gmail.com</a></div>
         <div><h3>Redes sociales</h3><p>Facebook · Por confirmar</p><p>Instagram · Por confirmar</p><p>LinkedIn · Por confirmar</p></div>
       </div>
       <div className="container footer-bottom"><span>© 2026 INNOVATECH SOLUTIONS S.R.L. Todos los derechos reservados.</span><span>Soluciones prácticas. Respuesta profesional.</span></div>
     </footer>
 
-    <button className="whatsapp-float" aria-label="WhatsApp pendiente de configuración" title="Número de WhatsApp por confirmar" onClick={() => document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })}>
-      <MessageCircle /><span>WhatsApp</span><small>Por confirmar</small>
-    </button>
+     <a className="whatsapp-float" href={whatsappUrl()} target="_blank" rel="noreferrer" aria-label="Escribir a INNOVATECH por WhatsApp" title="Escribir por WhatsApp">
+       <MessageCircle /><span>WhatsApp</span><small>Escríbanos</small>
+     </a>
   </div>;
 }
