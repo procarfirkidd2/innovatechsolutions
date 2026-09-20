@@ -9,9 +9,7 @@ import {
   Check,
   ChevronDown,
   ClipboardCheck,
-  Clock3,
   Factory,
-  HardHat,
   Mail,
   MapPin,
   Menu,
@@ -166,7 +164,7 @@ function Index() {
           <p className="hero-copy">Servicios adaptados a las necesidades de su empresa para mantener sus instalaciones limpias, ordenadas y listas para operar.</p>
           <div className="hero-actions">
              <ActionLink href={whatsappUrl()} external>Solicitar cotización</ActionLink>
-            <ActionLink href="#servicios" secondary>Conocer servicios</ActionLink>
+            <ActionLink href="#servicios" secondary>Conoce nuestros servicios</ActionLink>
           </div>
           <p className="hero-location"><MapPin size={16} /> Santa Cruz de la Sierra, Bolivia</p>
         </div>
@@ -244,24 +242,6 @@ function Index() {
         </div>
       </section>
 
-      <section id="trabajo" className="section work-section">
-        <div className="container">
-          <SectionHeading eyebrow="Nuestro trabajo" title="Experiencia que se demuestra en el terreno" copy="Este espacio está preparado para incorporar fotografías reales autorizadas de procesos, instalaciones, equipos y resultados." />
-          <div className="work-grid">
-            <div className="work-image"><img src={heroImage} loading="lazy" width={1920} height={1080} alt="Imagen de referencia de un proceso profesional de limpieza industrial" /><span>Imagen de referencia</span></div>
-            <div className="work-placeholder"><Factory /><strong>Próximamente</strong><p>Antes y después</p><small>Fotografías reales autorizadas</small></div>
-            <div className="work-placeholder"><HardHat /><strong>Próximamente</strong><p>Equipo en operación</p><small>Fotografías reales autorizadas</small></div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section proof-section">
-        <div className="container proof-grid">
-          <div><SectionHeading eyebrow="Confianza comprobable" title="Lo que nuestros clientes dicen" /><p>Estamos preparando este espacio para compartir experiencias reales de clientes que autoricen su publicación.</p></div>
-          <div className="testimonial-placeholder"><MessageCircle /><p>“Aquí se incorporarán testimonios reales de clientes autorizados.”</p><span>Contenido pendiente de validación</span></div>
-        </div>
-      </section>
-
       <section id="preguntas" className="section faq-section">
         <div className="container faq-grid">
           <SectionHeading eyebrow="Información útil" title="Preguntas frecuentes" copy="Respuestas claras para ayudarle a iniciar su solicitud." />
@@ -278,7 +258,6 @@ function Index() {
               <div><MapPin /><span><small>Ubicación</small>Santa Cruz de la Sierra, Bolivia</span></div>
                <a href="https://wa.me/59170342757" target="_blank" rel="noreferrer"><Phone /><span><small>Teléfono / WhatsApp</small>+591 70342757</span></a>
                <a href="mailto:innovatechsolutions.bo@gmail.com"><Mail /><span><small>Correo electrónico</small>innovatechsolutions.bo@gmail.com</span></a>
-              <div><Clock3 /><span><small>Horario</small>Por confirmar</span></div>
             </div>
           </div>
            <div className="whatsapp-cta">
@@ -298,7 +277,6 @@ function Index() {
         <div><a href="#inicio" className="brand footer-brand"><span className="brand-mark">IS</span><span><strong>INNOVATECH</strong><small>SOLUTIONS S.R.L.</small></span></a><p>Servicios industriales de limpieza y soluciones para la industria.</p></div>
         <div><h3>Enlaces</h3>{navItems.slice(0,5).map(([l,h]) => <a key={h} href={h}>{l}</a>)}</div>
          <div><h3>Contacto</h3><p>Santa Cruz de la Sierra, Bolivia</p><a href="https://wa.me/59170342757" target="_blank" rel="noreferrer">WhatsApp: +591 70342757</a><a href="mailto:innovatechsolutions.bo@gmail.com">innovatechsolutions.bo@gmail.com</a></div>
-        <div><h3>Redes sociales</h3><p>Facebook · Por confirmar</p><p>Instagram · Por confirmar</p><p>LinkedIn · Por confirmar</p></div>
       </div>
       <div className="container footer-bottom"><span>© 2026 INNOVATECH SOLUTIONS S.R.L. Todos los derechos reservados.</span><span>Soluciones prácticas. Respuesta profesional.</span></div>
     </footer>
