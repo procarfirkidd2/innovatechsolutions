@@ -125,6 +125,44 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  useEffect(() => {
+    const repositionBotpress = () => {
+      const bottom = window.matchMedia("(max-width: 760px)").matches ? "84px" : "96px";
+      const selectors = [
+        "#bp-web-widget",
+        "#bp-web-widget-container",
+        "[id*='botpress']",
+        "[class*='bp-widget']",
+        "[class*='botpress']",
+        "bp-webchat",
+        "iframe[src*='botpress']",
+      ];
+
+      const visit = (root: Document | ShadowRoot | Element) => {
+        root.querySelectorAll(selectors.join(",")).forEach((element) => {
+          if (!(element instanceof HTMLElement || element instanceof HTMLIFrameElement)) return;
+          if (element.classList.contains("whatsapp-float")) return;
+          element.style.setProperty("bottom", bottom, "important");
+          element.style.setProperty("z-index", "44", "important");
+        });
+        root.querySelectorAll("*").forEach((element) => {
+          if (element.shadowRoot) visit(element.shadowRoot);
+        });
+      };
+
+      visit(document);
+    };
+
+    const observer = new MutationObserver(repositionBotpress);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+    repositionBotpress();
+    const timer = window.setInterval(repositionBotpress, 1000);
+    return () => {
+      observer.disconnect();
+      window.clearInterval(timer);
+    };
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
