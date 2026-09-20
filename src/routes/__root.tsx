@@ -146,7 +146,8 @@ function RootComponent() {
           element.style.setProperty("z-index", "44", "important");
         });
         root.querySelectorAll("*").forEach((element) => {
-          if (element.shadowRoot) visit(element.shadowRoot);
+          const shadowRoot = (element as HTMLElement).shadowRoot;
+          if (shadowRoot) visit(shadowRoot);
         });
       };
 
